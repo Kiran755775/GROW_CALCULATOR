@@ -20,15 +20,19 @@ export default function SIPcalculator(){
     const handleTime=(event)=>{
         setTime(event.target.value)
     }
-    useEffect(()=>{
-        const rDecimal = interest / 100;
+    useEffect(() => {
+        const rDecimal = interest / 100; 
+        const rMonthly = rDecimal / 12; 
+        const months = time * 12; // Total number of months
+        
+        const powerTerm = Math.pow(1 + rMonthly, months);
+        const value = investment * ((powerTerm - 1) / rMonthly) * (1 + rMonthly);
+        
+        const totalInvestment = investment * months;
+        const returns = value - totalInvestment;
     
-        
-        const powerTerm = Math.pow(1 + rDecimal / 12, 12 * time);
-        const value = investment * (powerTerm - 1) / (rDecimal / 12);
-        
-        setEstREturns((parseInt(value.toFixed(0)-(investment*12*time).toFixed(0))));
-    },[investment,interest,time])
+        setEstREturns(Math.ceil(parseFloat(returns.toFixed(2)))); 
+      }, [investment, interest, time]);
 
     useEffect(()=>{
         const investmentNum = parseFloat(investment);
@@ -36,13 +40,21 @@ export default function SIPcalculator(){
         setTotalInvestment((investmentNum*12*timeNum))
     },[investment,time])
     useEffect(()=>{
+        const investmentNum = parseFloat(investment);
+        const timeNum= parseFloat(time);
+        const totalInvestment=((investmentNum*12*timeNum))
+        const rDecimal = interest / 100; 
+        const rMonthly = rDecimal / 12; 
+        const months = time * 12; // Total number of months
         
-        const rDecimal = interest / 100;
+        const powerTerm = Math.pow(1 + rMonthly, months);
+        const value = investment * ((powerTerm - 1) / rMonthly) * (1 + rMonthly);
+        
+        const totalInvestment1 = investment * months;
+        const returns = value - totalInvestment1;
     
-        
-        const powerTerm = Math.pow(1 + rDecimal / 12, 12 * time);
-        const value = (investment * (powerTerm - 1) / (rDecimal / 12));
-        setTotal((value).toFixed(0))
+        const est=(Math.ceil(parseFloat(returns.toFixed(2))));
+        setTotal(totalInvestment+est)
     },[time,investment,interest])
 
     const data = useMemo(() => [
@@ -90,7 +102,7 @@ export default function SIPcalculator(){
                 <div>
                     <div className="flex">
                         <h1 className="pl-7 text-gray-500 font-semibold">Monthly investment</h1>
-                        <div className="pl-40">
+                        <div className="pl-36">
                             <p className="font-semibold text-green-600  bg-green-100 w-28 p-1 pl-2"><span className="mr-10">₹</span><span>{investment}</span></p>
                         </div>
                         <div className="flex ">
@@ -141,8 +153,8 @@ export default function SIPcalculator(){
             </div>
                 <div className="pl-7">
                     <p className="text-gray-400 text-[14px] pt-7 ">Invested amount<span className="font-semibold text-black text-lg pl-[16.5vw]">₹{totalInvestment}</span></p>
-                    <p className="text-gray-400 text-[14px] pt-7 ">Est. returns<span className="font-semibold text-black text-lg pl-72">₹{estReturns}</span></p>
-                    <p className="text-gray-400 text-[14px] pt-7 ">Total<span className="font-semibold text-black text-lg pl-[21vw]">₹{total}</span></p>
+                    <p className="text-gray-400 text-[14px] pt-7 ">Est. returns<span className="font-semibold text-black text-lg pl-56">₹{estReturns}</span></p>
+                    <p className="text-gray-400 text-[14px] pt-7 ">Total<span className="font-semibold text-black text-lg pl-[23vw]">₹{total}</span></p>
                 </div>
                 </div>
        

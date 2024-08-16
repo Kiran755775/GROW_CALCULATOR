@@ -21,28 +21,21 @@ export default function Lumpsum(){
         setTime(event.target.value)
     }
     useEffect(()=>{
-        const rDecimal = interest / 100;
-    
-        const n = 12; 
-        const powerTerm = Math.pow(1 + rDecimal / n, n * time);
-        const fv = investment * powerTerm;
-        const totalInvested = investment; 
-        const returns = fv - totalInvested;
+       
         
-        setEstREturns(returns.toFixed(0));
+        setEstREturns((investment * Math.pow((1 + interest / 100), time) - investment).toFixed(0));
     },[investment,interest,time])
 
    
-    useEffect(()=>{
+    useEffect(() => {
         
-        const rDecimal = interest / 100;
+        const a = parseInt(investment * Math.pow((1 + interest / 100), time) - investment, 10);
+       
+        const b = Math.ceil(parseInt(investment, 10));
     
-        const n = 12; 
-        const powerTerm = Math.pow(1 + rDecimal / n, n * time);
-        const fv = investment * powerTerm;
-        setTotal((fv).toFixed(0))
-    },[time,investment,interest])
-
+       
+        setTotal(a + b);
+    }, [time, investment, interest]);
     const data = useMemo(() => [
         {
             name: "Investment",
@@ -88,8 +81,8 @@ export default function Lumpsum(){
                         <div>
                             <div className="flex">
                                 <h1 className="pl-7 text-gray-500 font-semibold">Total investment</h1>
-                                <div className="pl-40 ml-8">
-                                    <p className="font-semibold text-green-600  bg-green-100 w-28 p-1 pl-2"><span className="mr-10">₹</span><span>{investment}</span></p>
+                                <div className="pl-40 ml-4">
+                                    <p className="font-semibold text-green-600  bg-green-100 w-28 p-1 "><span className="mr-10">₹</span><span>{investment}</span></p>
                                 </div>
                                 <div className="flex ">
                                     <div className="flex items-center pl-20">
@@ -109,7 +102,7 @@ export default function Lumpsum(){
                             </div>
                                 <input type="range" className="ml-7 py-7  w-[29.5vw]" min="500" max="10000000" value={investment} onChange={handleChange}/>
                         </div>
-                    <div className="flex ">
+                    <div className="flex">
                        <div className="flex flex-col">
                             <div>
                                 <div className="flex">
@@ -139,8 +132,8 @@ export default function Lumpsum(){
                     </div>
                         <div className="pl-7">
                             <p className="text-gray-400 text-[14px] pt-7 ">Invested amount<span className="font-semibold text-black text-lg pl-[16.5vw]">₹{investment}</span></p>
-                            <p className="text-gray-400 text-[14px] pt-7 ">Est. returns<span className="font-semibold text-black text-lg pl-72">₹{estReturns}</span></p>
-                            <p className="text-gray-400 text-[14px] pt-7 ">Total<span className="font-semibold text-black text-lg pl-[21vw]">₹{total}</span></p>
+                            <p className="text-gray-400 text-[14px] pt-7 ">Est. returns<span className="font-semibold text-black text-lg pl-[20vw]">₹{estReturns}</span></p>
+                            <p className="text-gray-400 text-[14px] pt-7 ">Total<span className="font-semibold text-black text-lg pl-[23vw]">₹{total}</span></p>
                         </div>
                         </div>
                
