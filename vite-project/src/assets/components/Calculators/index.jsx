@@ -19,9 +19,8 @@ export default function Calculators() {
 
     return (
         <>
-            <div className="pl-40">
-            <h1 className="text-[28px] font-semibold text-gray-600 pt-10 pb-10">SIP Calculator</h1>
-            <div className="border-[2px]  border-gray-100 rounded-lg h-5/6  relative">
+            
+           
             
             <div className="flex p-7">
                 {featuresList.map((eachItem) => (
@@ -46,9 +45,9 @@ export default function Calculators() {
                     ) : null
                 )}
             </div>
-            </div>
             
-            </div>
+            
+            
         </>
     );
 }
